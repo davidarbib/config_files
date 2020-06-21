@@ -6,7 +6,6 @@ set rtp+=~/.vim/bundle/Vundle.vim
 
 set rtp+=~/.vim/plugins/**
 set rtp+=~/.fzf
-
 call vundle#begin('~/.vim/plugins')
 " alternatively, pass a path where Vundle should install plugins
 " call vundle#begin('~/some/path/here')
@@ -128,6 +127,8 @@ nmap <Space>k <C-W>k
 nmap <Space>j <C-W>j
 nmap <Space>h <C-W>h
 nmap <Space>l <C-W>l
+
+nnoremap <leader>pv :wincmd v<bar> :Ex <bar> :vertical resize 30<CR>
 
 "--- word search ----
 
