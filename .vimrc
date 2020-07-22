@@ -59,8 +59,9 @@ filetype plugin indent on    " required
 let g:netrw_liststyle = 3
 let g:netrw_banner = 0
 
+set noshowmode
 set laststatus=2
-" --- reperage ---
+	" --- reperage ---
 set nu
 set rnu
 "set ruler
