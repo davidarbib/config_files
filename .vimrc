@@ -6,6 +6,7 @@ set rtp+=~/.vim/bundle/Vundle.vim
 
 set rtp+=~/.vim/plugins/**
 set rtp+=~/.fzf
+
 call vundle#begin('~/.vim/plugins')
 " alternatively, pass a path where Vundle should install plugins
 " call vundle#begin('~/some/path/here')
@@ -30,6 +31,7 @@ Plugin 'VundleVim/Vundle.vim'
 " different version somewhere else.
 " Plugin 'ascenator/L9', {'name': 'newL9'}
 
+Plugin 'flrnprz/plastic.vim'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-repeat'
@@ -37,6 +39,7 @@ Plugin 'christoomey/vim-system-copy'
 Plugin 'michaeljsmith/vim-indent-object'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'NLKNguyen/papercolor-theme'
+Plugin 'vim-airline/vim-airline'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -54,13 +57,13 @@ filetype plugin indent on    " required
 " Put your non-Plugin stuff after this line
 
 let g:netrw_liststyle = 3
-let g:netrw_browse_split = 4
 let g:netrw_banner = 0
 
+set laststatus=2
 " --- reperage ---
 set nu
 set rnu
-set ruler
+"set ruler
 set colorcolumn=81
 
 " --- indentation ---
@@ -87,20 +90,23 @@ set tags=~/miniRT/tags
 " --- themes ---
 set t_Co=256
 
-set background=light
-let g:PaperColor_Theme_Options = {
-\   'theme': {
-\     	'default.light': {
-\       	'transparent_background': 1
-\     	},
-\   'language': {
-\   	'c': {
-\			'highlight_builtins' : 1
-\		}
-\   }
-\ }
-\}
-colorscheme PaperColor
+"let g:PaperColor_Theme_Options = {
+"\   'theme': {
+"\     	'default.light': {
+"\       	'transparent_background': 1
+"\     	},
+"\   'language': {
+"\   	'c': {
+"\			'highlight_builtins' : 1
+"\		}
+"\   }
+"\ }
+"\}
+"set termguicolors
+set background=dark
+colorscheme plastic
+
+"colorscheme PaperColor
 "colorscheme wasabi256
 "colorscheme dark-ruby
 "colorscheme triplejelly
@@ -108,6 +114,7 @@ colorscheme PaperColor
 "colorscheme desert256
 "colorscheme desert256v2
 "colorscheme seoul256
+"colorscheme seoul256-light
 "colorscheme babymate256
 "colorscheme tigrana-256-dark
 "colorscheme oceanblack256
@@ -128,8 +135,6 @@ nmap <Space>j <C-W>j
 nmap <Space>h <C-W>h
 nmap <Space>l <C-W>l
 
-nnoremap <leader>pv :wincmd v<bar> :Ex <bar> :vertical resize 30<CR>
-
 "--- word search ----
 
 "nnoremap * * :nohlsearch<CR>
@@ -139,6 +144,3 @@ hi MatchParen ctermbg=brown ctermfg=black
 
 "--- autocompletion ---
 set complete=.,w,b,u,t
-
-"--- disable bells---
-set noeb vb t_vb=
