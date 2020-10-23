@@ -40,6 +40,8 @@ Plugin 'michaeljsmith/vim-indent-object'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'NLKNguyen/papercolor-theme'
 Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'ajmwagar/vim-deus'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -55,7 +57,38 @@ filetype plugin indent on    " required
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
+"-------------------------------------
+" air-line
+ let g:airline_powerline_fonts = 1
 
+ if !exists('g:airline_symbols')
+     let g:airline_symbols = {}
+     endif
+
+     " unicode symbols
+     let g:airline_left_sep = '»'
+     let g:airline_left_sep = '▶'
+     let g:airline_right_sep = '«'
+     let g:airline_right_sep = '◀'
+     let g:airline_symbols.linenr = '␊'
+     let g:airline_symbols.linenr = '␤'
+     let g:airline_symbols.linenr = '¶'
+     let g:airline_symbols.branch = '⎇'
+     let g:airline_symbols.paste = 'ρ'
+     let g:airline_symbols.paste = 'Þ'
+     let g:airline_symbols.paste = '∥'
+     let g:airline_symbols.whitespace = 'Ξ'
+
+     " airline symbols
+     let g:airline_left_sep = ''
+     let g:airline_left_alt_sep = ''
+     let g:airline_right_sep = ''
+     let g:airline_right_alt_sep = ''
+     let g:airline_symbols.branch = ''
+     let g:airline_symbols.readonly = ''
+     let g:airline_symbols.linenr = ''
+"-------------------------------------
+"
 let g:netrw_liststyle = 3
 let g:netrw_banner = 0
 
@@ -70,6 +103,8 @@ set colorcolumn=81
 " --- indentation ---
 set autoindent
 set tabstop=4
+set shiftwidth=4
+set noexpandtab
 syntax on
 set mouse=a
 
@@ -104,8 +139,17 @@ set t_Co=256
 "\ }
 "\}
 "set termguicolors
-set background=dark
-colorscheme plastic
+let g:airline_powerline_fonts = 1
+set t_Co=256
+set termguicolors
+
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+
+set background=dark    " Setting dark mode
+colorscheme deus
+let g:deus_termcolors=256
+"colorscheme plastic
 
 "colorscheme PaperColor
 "colorscheme wasabi256
@@ -127,7 +171,7 @@ colorscheme plastic
 "nmap <Tab> <C-P> todo other
 
 "--- redo ---
-nmap U <C-R> 
+nmap U <C-R>
 
 "--- split navigation ---
 nmap <Space> <Nop>
@@ -145,3 +189,9 @@ hi MatchParen ctermbg=brown ctermfg=black
 
 "--- autocompletion ---
 set complete=.,w,b,u,t
+
+fun! TrimWhitespace()
+    let l:save = winsaveview()
+    keeppatterns %s/\s\+$//e
+    call winrestview(l:save)
+endfun
