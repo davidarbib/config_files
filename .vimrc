@@ -43,6 +43,7 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'ajmwagar/vim-deus'
 
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -123,7 +124,7 @@ set path+=**
 "set foldmethod=indent
 
 set wildmenu
-set tags=~/miniRT/tags
+set tags=~/minishell/tags
 
 " --- themes ---
 set t_Co=256
@@ -173,14 +174,11 @@ let g:deus_termcolors=256
 "nmap <Tab> <C-P> todo other
 
 "--- redo ---
-nmap U <C-R>
+nnoremap U <C-R>
 
 "--- split navigation ---
-nmap <Space> <Nop>
-nmap <Space>k <C-W>k
-nmap <Space>j <C-W>j
-nmap <Space>h <C-W>h
-nmap <Space>l <C-W>l
+nnoremap <Space> <Nop>
+nnoremap <Space> <C-W>
 
 "--- word search ----
 
@@ -197,3 +195,74 @@ fun! TrimWhitespace()
     keeppatterns %s/\s\+$//e
     call winrestview(l:save)
 endfun
+
+" Load all plugins now.
+" Plugins need to be added to runtimepath before helptags can be generated.
+packloadall
+" Load all of the helptags now, after plugins have been loaded.
+" All messages and errors will be ignored.
+silent! helptags
+let g:ycm_bal_ycm_extra_conf = '~/.ycm_extra_conf.py'
+
+" ----learn vimscript the hard way tutorial---
+echo ">^.^<"
+echo "test123"
+let mapleader = "\\"
+let maplocalleader = "H"
+noremap <Leader>d ddp
+" Ctrl-u for uppercase word in insert and normal mode
+inoremap <c-u> <esc>viw Ui
+nnoremap <c-u> viw U<esc>
+" vimrc editing and sourcing
+nnoremap <leader>ev :vsplit ~/.vimrc<cr>
+nnoremap <leader>sv :source ~/.vimrc<cr>
+" block creation
+nnoremap <leader>bl o{<cr>}<esc>
+" fast signature
+iabbrev @@ davidarbib@yahoo.fr
+iabbrev ssig --<cr>David Arbib<cr>davidarbib@yahoo.fr 
+" fast preproc 
+iabbrev iss #include <><esc>
+iabbrev iuu #include ""<esc>
+iabbrev dff #define
+iabbrev indd #ifndef
+iabbrev endd #endif
+" fast keyword
+iabbrev wihle while
+iabbrev retrun return
+iabbrev iff if ()<cr>{<cr>}<esc>kkf(
+iabbrev elsee else<cr>{<cr>}<esc>k
+iabbrev elseif else if ()<cr>{<cr>}<esc>kkf(
+iabbrev whilee while ()<cr>{<cr>}<esc>kkf(
+iabbrev wihlee while ()<cr>{<cr>}<esc>kkf(
+iabbrev forr for (;;)<cr>{<cr>}<esc>kkf(
+iabbrev class class <cr>{<cr>};<esc>kkfsfs
+
+inoremap jk <esc>
+nnoremap <leader>q <c-z>
+inoremap qjk <esc><c-z>
+
+" -------------ALE config-----------------
+let g:ale_linters = {
+\   'javascript': ['eslint'],
+\	'c': ['clangd'],
+\}
+let g:airline#extensions#ale#enabled = 1
+let g:ale_set_balloons = 0
+" let g:ale_lint_on_text_changed = 'never'
+" let g:ale_lint_on_insert_leave = 0
+" let g:ale_c_parse_compile_commands = 1
+let g:ale_c_clang_executable = 'clang'
+"let g:ale_c_clang_options = '-std=c99 -Wall -Wextra -Werror -Iincludes -Ilibft/includes'
+" ----------------------------------------
+augroup project
+  autocmd!
+  autocmd BufRead,BufNewFile *.h,*.c set filetype=c
+augroup END
+" ----------------------------------------
+" Load all plugins now.
+" Plugins need to be added to runtimepath before helptags can be generated.
+packloadall
+" Load all of the helptags now, after plugins have been loaded.
+" All messages and errors will be ignored.
+silent! helptags ALL
