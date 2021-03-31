@@ -266,3 +266,17 @@ packloadall
 " Load all of the helptags now, after plugins have been loaded.
 " All messages and errors will be ignored.
 silent! helptags ALL
+
+fun! Genclass(classname)
+	let l:text = ["#ifndef " . toupper(a:classname). "_HPP"]
+	:call add(l:text, "# define ". toupper(a:classname) . "_HPP")
+	:call add(l:text, "Class ". a:classname)
+	:call add(l:text, "{")
+	:call add(l:text, "\tpublic:")
+	:call add(l:text, "\t\t" . a:classname . "();")
+	:call add(l:text, "\t\t~" . a:classname . "();")
+	:call add(l:text, "" . a:classname . "();")
+	:call add(l:text, "\tprivate:")
+	:call writefile(l:text, a:classname . ".cpp")
+endfun
+source /usr/share/vim/vim80/plugin/stdheader.vim
