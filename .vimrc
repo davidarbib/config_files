@@ -42,7 +42,9 @@ Plugin 'NLKNguyen/papercolor-theme'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'ajmwagar/vim-deus'
-
+Plugin 'HenryNewcomer/vim-theme-papaya'
+Plugin 'maralla/completor.vim'
+Plugin 'mattn/emmet-vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -101,7 +103,7 @@ set laststatus=2
 set nu
 set rnu
 "set ruler
-set colorcolumn=81
+"set colorcolumn=81
 
 " --- indentation ---
 set autoindent
@@ -124,7 +126,7 @@ set path+=**
 "set foldmethod=indent
 
 set wildmenu
-set tags=~/minishell/tags
+set tags=~/webserv/tags
 
 " --- themes ---
 set t_Co=256
@@ -149,8 +151,10 @@ set termguicolors
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 
-set background=dark    " Setting dark mode
-colorscheme deus
+"set background=dark    " Setting dark mode
+"colorscheme oceanlight 
+colorscheme papaya
+"colorscheme deus
 let g:deus_termcolors=256
 "colorscheme plastic
 
@@ -202,11 +206,9 @@ packloadall
 " Load all of the helptags now, after plugins have been loaded.
 " All messages and errors will be ignored.
 silent! helptags
-let g:ycm_bal_ycm_extra_conf = '~/.ycm_extra_conf.py'
+"let g:ycm_bal_ycm_extra_conf = '~/.ycm_extra_conf.py'
 
 " ----learn vimscript the hard way tutorial---
-echo ">^.^<"
-echo "test123"
 let mapleader = "\\"
 let maplocalleader = "H"
 noremap <Leader>d ddp
@@ -217,19 +219,22 @@ nnoremap <c-u> viw U<esc>
 nnoremap <leader>ev :vsplit ~/.vimrc<cr>
 nnoremap <leader>sv :source ~/.vimrc<cr>
 " block creation
-nnoremap <leader>bl o{<cr>}<esc>
+nnoremap <leader>bl o{<cr>}<esc>O
 " fast signature
 iabbrev @@ davidarbib@yahoo.fr
 iabbrev ssig --<cr>David Arbib<cr>davidarbib@yahoo.fr 
 " fast preproc 
-iabbrev iss #include <><esc>
-iabbrev iuu #include ""<esc>
+iabbrev isss #include <><esc>
+iabbrev iuuu #include ""<esc>
 iabbrev dff #define
 iabbrev indd #ifndef
 iabbrev endd #endif
 " fast keyword
 iabbrev wihle while
+iabbrev whlie while
 iabbrev retrun return
+iabbrev rterun return
+iabbrev rtreun return
 iabbrev iff if ()<cr>{<cr>}<esc>kkf(
 iabbrev elsee else<cr>{<cr>}<esc>k
 iabbrev elseif else if ()<cr>{<cr>}<esc>kkf(
@@ -241,20 +246,36 @@ iabbrev class class <cr>{<cr>};<esc>kkfsfs
 inoremap jk <esc>
 nnoremap <leader>q <c-z>
 inoremap qjk <esc><c-z>
+nnoremap <leader>y <c-y>
+
+" --------------tmux compatibility------------
+nnoremap <c-b> <Nop>
+
+" --------------jedi config-------------------
+let g:completor_clang_binary = '/usr/bin/clangd'
+
+" -------------airline config-----------------
+let g:airline#extensions#ale#enabled = 1
+let g:airline_theme='jellybeans'
 
 " -------------ALE config-----------------
 let g:ale_linters = {
 \   'javascript': ['eslint'],
 \	'c': ['clangd'],
+\	'cpp': ['cc']
 \}
-let g:airline#extensions#ale#enabled = 1
 let g:ale_set_balloons = 0
 " let g:ale_lint_on_text_changed = 'never'
 " let g:ale_lint_on_insert_leave = 0
 " let g:ale_c_parse_compile_commands = 1
+let g:ale_c_parse_compile_commands = 1
 let g:ale_c_clang_executable = 'clang'
 "let g:ale_c_clang_options = '-std=c99 -Wall -Wextra -Werror -Iincludes -Ilibft/includes'
+let g:ale_cpp_cc_executable = 'clang++'
+let g:ale_cpp_cc_options = '-std=c++98 -Wall -Wextra -Werror -Iincludes'
+let g:ale_cpp_parse_compile_commands = 1
 " ----------------------------------------
+highlight ColorColumn ctermbg=238
 augroup project
   autocmd!
   autocmd BufRead,BufNewFile *.h,*.c set filetype=c
@@ -266,7 +287,6 @@ packloadall
 " Load all of the helptags now, after plugins have been loaded.
 " All messages and errors will be ignored.
 silent! helptags ALL
-
 fun! Genclass(classname)
 	let l:text = ["#ifndef " . toupper(a:classname). "_HPP"]
 	:call add(l:text, "# define ". toupper(a:classname) . "_HPP")
@@ -279,7 +299,7 @@ fun! Genclass(classname)
 	:call add(l:text, "\tpublic:")
 	:call add(l:text, "\t\t" . a:classname . "(void);")
 	:call add(l:text, "\t\t" . a:classname . "(" . a:classname. " const &src);")
-	:call add(l:text, "\t\t~" . a:classname . "(void);")
+	:call add(l:text, "\t\tvirtual\t~" . a:classname . "(void);")
 	:call add(l:text, "\t\t" . a:classname . "\t&operator=(" . a:classname . " const &rhs);")
 	:call add(l:text, "\tprivate:")
 	:call add(l:text, "};")
@@ -305,4 +325,3 @@ fun! Genclass(classname)
 	:call add(l:textcpp, "")
 	:call writefile(l:textcpp, a:classname . ".cpp")
 endfun
-source /usr/share/vim/vim80/plugin/stdheader.vim
