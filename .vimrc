@@ -1,6 +1,9 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
+"source ~/.vim/ts_tab.vim
+source ~/.vim/c_tab.vim
+
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 
@@ -31,20 +34,20 @@ Plugin 'VundleVim/Vundle.vim'
 " different version somewhere else.
 " Plugin 'ascenator/L9', {'name': 'newL9'}
 
-Plugin 'flrnprz/plastic.vim'
-Plugin 'tpope/vim-commentary'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-repeat'
+"Plugin 'flrnprz/plastic.vim'
+"Plugin 'tpope/vim-commentary'
+"Plugin 'tpope/vim-surround'
+"Plugin 'tpope/vim-repeat'
 Plugin 'christoomey/vim-system-copy'
-Plugin 'michaeljsmith/vim-indent-object'
+"Plugin 'michaeljsmith/vim-indent-object'
 Plugin 'terryma/vim-multiple-cursors'
-Plugin 'NLKNguyen/papercolor-theme'
+"Plugin 'NLKNguyen/papercolor-theme'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
-Plugin 'ajmwagar/vim-deus'
-Plugin 'HenryNewcomer/vim-theme-papaya'
-Plugin 'maralla/completor.vim'
-Plugin 'mattn/emmet-vim'
+"Plugin 'ajmwagar/vim-deus'
+"Plugin 'HenryNewcomer/vim-theme-papaya'
+"Plugin 'maralla/completor.vim'
+Plugin 'dracula/vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -106,10 +109,12 @@ set rnu
 "set colorcolumn=81
 
 " --- indentation ---
-set autoindent
-set tabstop=4
-set shiftwidth=4
-set noexpandtab
+"set autoindent
+"set tabstop=4
+"set shiftwidth=4
+"set noexpandtab
+"set expandtab
+"set tabstop=4
 syntax on
 set mouse=a
 
@@ -144,16 +149,22 @@ set t_Co=256
 "\ }
 "\}
 "set termguicolors
+
+if (has("termguicolors"))
+ set termguicolors
+endif
+syntax enable
+
+colorscheme dracula
 let g:airline_powerline_fonts = 1
 set t_Co=256
-set termguicolors
 
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 
 "set background=dark    " Setting dark mode
 "colorscheme oceanlight 
-colorscheme papaya
+"colorscheme papaya
 "colorscheme deus
 let g:deus_termcolors=256
 "colorscheme plastic
@@ -251,29 +262,39 @@ nnoremap <leader>y <c-y>
 " --------------tmux compatibility------------
 nnoremap <c-b> <Nop>
 
+" -------------- nerdtree config ----------
+"let g:NERDTreeShowHidden = 0
+"let g:NERDTreeMinimalUI = 1
+"let g:NERDTreeIgnore = []
+"let g:NERDTreeStatusline = ''
+"" Automaticaly close nvim if NERDTree is only thing left open
+"autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+"" Toggle
+"nnoremap <silent> <C-b> :NERDTreeToggle<CR>j
+
 " --------------jedi config-------------------
 let g:completor_clang_binary = '/usr/bin/clangd'
 
 " -------------airline config-----------------
 let g:airline#extensions#ale#enabled = 1
-let g:airline_theme='jellybeans'
+let g:airline_theme='dracula'
 
-" -------------ALE config-----------------
-let g:ale_linters = {
-\   'javascript': ['eslint'],
-\	'c': ['clangd'],
-\	'cpp': ['cc']
-\}
-let g:ale_set_balloons = 0
-" let g:ale_lint_on_text_changed = 'never'
-" let g:ale_lint_on_insert_leave = 0
-" let g:ale_c_parse_compile_commands = 1
-let g:ale_c_parse_compile_commands = 1
-let g:ale_c_clang_executable = 'clang'
-"let g:ale_c_clang_options = '-std=c99 -Wall -Wextra -Werror -Iincludes -Ilibft/includes'
-let g:ale_cpp_cc_executable = 'clang++'
-let g:ale_cpp_cc_options = '-std=c++98 -Wall -Wextra -Werror -Iincludes'
-let g:ale_cpp_parse_compile_commands = 1
+"" -------------ALE config-----------------
+"let g:ale_linters = {
+"\   'javascript': ['eslint'],
+"\	'c': ['clangd'],
+"\	'cpp': ['cc']
+"\}
+"let g:ale_set_balloons = 0
+"" let g:ale_lint_on_text_changed = 'never'
+"" let g:ale_lint_on_insert_leave = 0
+"" let g:ale_c_parse_compile_commands = 1
+"let g:ale_c_parse_compile_commands = 1
+"let g:ale_c_clang_executable = 'clang'
+""let g:ale_c_clang_options = '-std=c99 -Wall -Wextra -Werror -Iincludes -Ilibft/includes'
+"let g:ale_cpp_cc_executable = 'clang++'
+"let g:ale_cpp_cc_options = '-std=c++98 -Wall -Wextra -Werror -Iincludes'
+"let g:ale_cpp_parse_compile_commands = 1
 " ----------------------------------------
 highlight ColorColumn ctermbg=238
 augroup project
